@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-我的第一篇博客文章" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/07/09/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" class="article-date">
+  <time class="dt-published" datetime="2024-07-09T09:49:07.000Z" itemprop="datePublished">2024-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/07/09/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">我的第一篇博客文章</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="密码学大作业报告"><a href="#密码学大作业报告" class="headerlink" title="密码学大作业报告"></a>密码学大作业报告</h1><h2 id="——SM2的倍点运算快速实现"><a href="#——SM2的倍点运算快速实现" class="headerlink" title="——SM2的倍点运算快速实现"></a>——SM2的倍点运算快速实现</h2><h4 id="22373032-秦敏泽"><a href="#22373032-秦敏泽" class="headerlink" title="22373032 秦敏泽"></a><strong>22373032</strong> <strong>秦敏泽</strong></h4><h3 id="一、背景与问题介绍"><a href="#一、背景与问题介绍" class="headerlink" title="一、背景与问题介绍"></a>一、背景与问题介绍</h3><p>SM2，作为中国自主研发的商用公钥密码算法标准，以其卓越的性能和高度的安全性，已经在国密系统中取代了RSA算法。如今，SM2已经在金融和其他关键领域得到了广泛应用。<br>SM2算法基于椭圆曲线密码机制设计而成，其核心运算是椭圆曲线域上的倍点运算。这一运算在SM2算法中起着关键作用，它决定了签名验签、加解密以及密钥交换的效率。因此，为了提高SM2算法在实际应用中的效率，我们需要关注和优化椭圆曲线倍点算法的设计和实现。而椭圆曲线倍点算法的效率将会直接影响到整个加密过程的速度。通过研究和开发高效的椭圆曲线倍点算法，我们可以减少计算时间，从而提高SM2算法在实际应用中的性能，以达到提高其实际应用的广泛性的目标。<br>SM2算法作为一种高效且安全的商用公钥密码算法，已经在我国金融和其他关键领域得到广泛应用。为了进一步提高其性能，我们需要不断研究和改进椭圆曲线倍点算法，以实现更高效的加密和解密过程，从而保障我国金融和其他重要领域的安全性，并提高系统的运行效率。</p>
+<h3 id="二、解决方案"><a href="#二、解决方案" class="headerlink" title="二、解决方案"></a>二、解决方案</h3><h5 id="（1）主要设计思路与技术介绍"><a href="#（1）主要设计思路与技术介绍" class="headerlink" title="（1）主要设计思路与技术介绍"></a>（1）主要设计思路与技术介绍</h5><p>问题的产生：SM2算法的效率在加密、签名、密钥交换等操作中受到椭圆曲线域上倍点运算效率的影响。由于椭圆曲线密码体制的安全性建立在椭圆曲线离散对数问题的难解性上，因此，提高倍点运算的效率对于整体算法的性能至关重要。<br>解决方法：为了解决倍点运算效率低下的问题，我在查阅资料后，发现在软件加速可以考虑采用滑动窗口技术、加法链技术等。这些技术可以减少在椭圆曲线上的点乘运算所需的迭代次数，从而提高计算效率，而在硬件实现方面则主要是采用并行架构的基于FPGA的实现。在我的实验中，我对于几个软件上的方法都进行了实现，同时对于它们最终呈现的加速效果进行了比较。<br>预期效果：预期的优点包括减少计算时间、提高加密和解密的效率、降低能耗等，从而使得SM2算法在金融和其他关键领域的应用更加高效和可靠。</p>
+<h5 id="（2）具体方案实现分析："><a href="#（2）具体方案实现分析：" class="headerlink" title="（2）具体方案实现分析："></a>（2）具体方案实现分析：</h5><p>在本实验中，针对倍点运算的加速主要是在SM2加密算法步骤的A2和A3两步，即：</p>
+<blockquote>
+<p>A2： 计算椭圆曲线点 <em>C</em>1 <em>&#x3D;</em> [<em>k</em>]<em>G&#x3D;</em>(<em>x</em>1, <em>y</em>1)，按 GM&#x2F;T 0003.1—2012 的 4.2.9 和 4.2.5 给出</p>
+<p>的方法，将 <em>C</em>1 的数据类型转换为比特串；</p>
+<p>A3： 计算椭圆曲线点 <em>S</em> &#x3D; [<em>h</em>]<em>P**B</em>&#x3D;(<em>x</em>2, <em>y</em>2)，若 <em>S</em> 是无穷远点则报错退出；</p>
+</blockquote>
+<p>因此不必要把整个SM2加密算法进行实现，只需要对倍点运算进行实现，评价不同算法的效率用执行这两个步骤的所用时间来衡量即可；此外，在题面中提到“编写代码可以借助公开库miracl等”，miracl是针对c语言的一个公开库，我使用python完成了这次实验，并且正如我前面所说，在实验的过程中不需要对整个SM2进行实现，我也就没有用到很相关的密码学库，这在具体的代码中有所体现。</p>
+<p>下面我将介绍我实现的几种方案：</p>
+<p>（1）传统使用平方乘算法思想的倍点运算的实现：这是最基本的倍点运算的加速，不采取一个一个点的相加，而是使用平方乘算法的思想进行实现，也就是经典的倍乘-加算法，在我的本次方案中，这一实现达到的效率作为最基本的效率评估。</p>
+<p>（2）使用固定的滑动窗口进行倍点运算的加速：这种方法在我看来是对使用平方乘算法的一种改进方法，其通过扩展平方乘算法的位数和进行预计算达到了比第一种方案理论上更快的倍点运算的效果，其具体做法是：例如计算k﹡P选择一个窗口值<em>w</em>，我们预计算0到2**w的P作为预计算得到的数组结果，将k化为二进制表示，并将二进制表示按w位进行分组（若无法正好分完，则在处理最后一个窗口时进行单独计算，将其结果加到前面得到的结果中），之后的过程事实上与平方乘类似：</p>
+<p><em>1、设定初始点为椭圆曲线的单位元O</em></p>
+<p><em>2、在k的二进制表示没有被取完时，每次取k的二进制表示的w位作为window值</em></p>
+<p><em>3、临时点&#x3D;预计算中window值对应的点</em></p>
+<p><em>4、结果点等于（2**w）倍的结果点加上临时点</em></p>
+<p><em>5、在k的二进制表示被取完后，最后的结果点即是倍点运算的结果</em></p>
+<p>这种方式与平方乘算法的不同就在于平方乘算法一次只能移动一位，而这种固定窗口的方法一次可以移动多位，显然在不计较预计算的开销的情况下，后者的效率是更高的。</p>
+<p>事实上，我在后面查阅文献了解到这种方法是国际电机电子工程师协会于1994 年开始着手定制的P1363标准中实现了的标量乘法，即滑动窗口算法。该算法根据固定窗口的大小，每次处理二进制数P中的多位。</p>
+<p>（3）使用自适应的滑动窗口标量乘法：我在实现完固定的滑动窗口之后，我发现窗口值的大小直接关系到整个倍点计算的效率。我在想如果预计算的时间不需要考虑的话，是否窗口值一直扩大则实际运算的效率就会更高，这一点是显然的，因为只要窗口值足够大，那么k的二进制表示就能落在预计算的值中，调用只需要O(1)，但是这样做无疑大大增大了预计算的计算量，预计算的结果的存储也成问题；既然窗口值不能一味的变大，那么怎么找到一个最合适的大窗口呢？考虑预计算的过程，我发现其计算的是0到2**w的P，那么窗口值的取值就显然了：窗口值取k的二进制表示中连续1和连续0最多的个数，之后的计算过程就是和固定窗口一样了：</p>
+<p><em>1、判断k中最多的连续1和连续0的位数的较大值，将其作为窗口值</em></p>
+<p><em>2、使用这一窗口值进行方案二中的过程</em></p>
+<p>原始滑动窗口算法中窗口大小固定不变，每次根据给定的窗口大小值，处理二进制大整数中的固定长度为；而在改进的算法中，滑动窗口的大小不需要预先设定，根据二进制表示中0和1的分布情况来自动调整窗口的大小，从而达到最佳值。</p>
+<p>（4）w-NAF表示法：NAF是不同于二进制表示的一种数的表示方法，其有一些特殊的性质：</p>
+<blockquote>
+<ul>
+<li>每个正整数k都有独一无二的NAF表达。记作NAF(k)。</li>
+<li>NAF(k)有所有k的有符号表达最少的非零数字。</li>
+<li>NAF(k)的长度最多比二进制表达多一个。</li>
+<li>在所有长度为𝑙的NAF中，非零系数的概率约为1&#x2F;3。</li>
+</ul>
+</blockquote>
+<p>这样的性质可以减少倍点运算中加法运算的次数，从而达到提高倍点运算效率的作用。</p>
+<p>更近一步，可以将NAF{-1，0，1}表示变成w进制的表示方法，即w-NAF方法，这样与滑动窗口类似可以进一步提高NAF基础上的的倍点计算效率，这样做需要：</p>
+<p>1、与滑动窗口的方法类似，选择窗口大小w，进行预计算。</p>
+<p>2、将正常的二进制表示变成w-NAF表示。</p>
+<p>3、使用w-NAF表示来进行迭代计算。</p>
+<p>其主要优点是它减少了椭圆曲线标量乘法中所需的加法和减法操作的次数，同时增加了双倍操作的次数。由于双倍操作通常比加法操作更快，因此w-NAF可以显著提高标量乘法的效率。</p>
+<p>（5）Montgomery ladder算法：只使用双倍运算和一个固定的加法运算来生成所有的中间结果，这样可以减少计算量并提高效率，这种算法在实现原理上看和正常的平方乘加速没有什么区别。</p>
+<ol>
+<li>初始化：选择椭圆曲线上的一个基点G，以及要计算的标量k（k的二进制表示）。初始化两个点R0和R1，其中R0是无穷远点（即零点），R1是基点G。</li>
+<li>迭代计算：对于标量k的每一个二进制位（从最高位到最低位），执行以下操作：<ul>
+<li>如果当前位是0，执行一个双倍运算：R1 &#x3D; R1 + R0，R0 &#x3D; 2 * R0。</li>
+<li>如果当前位是1，执行一个双倍运算和一个加法运算：R0 &#x3D; R0 + R1，R1 &#x3D; 2 * R1。</li>
+</ul>
+</li>
+<li>输出结果：迭代完成后，R0就是标量k乘以基点G的结果。</li>
+</ol>
+<p>Montgomery ladder的一个关键特性是它的安全性。在算法的每一步中，R0和R1都是标量乘法可能的中间结果，这意味着攻击者无法通过观察中间步骤来获取关于私钥的信息。这种性质使得Montgomery ladder在抵抗某些类型的侧信道攻击（如定时攻击和功耗分析攻击）方面特别有用。</p>
+<h3 id="四、方案评估"><a href="#四、方案评估" class="headerlink" title="四、方案评估"></a>四、方案评估</h3><p>传入倍点计算的数值就是题面上给出的曲线参数，即：</p>
+<blockquote>
+<p>椭圆曲线方程为：<em>y</em> 2 &#x3D; <em>x</em> 3 + <em>ax</em> + <em>b</em></p>
+<p>素数 p：FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFF</p>
+<p>系数 a：FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFC</p>
+<p>系数 b：8E9FA9E9D9F5E344D5A9E4BCF6509A7F39789F515AB8F92DDBCBD414D940E93</p>
+<p>阶 n: FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFF7203DF6B21C6052B53BBF40939D54123</p>
+<p>基点 G：&#x3D;（<em>x</em>G,<em>y</em>G）</p>
+<p>坐标 <em>x</em>G: 32C4AE2C1F1981195F9904466A39C9948FE30BBFF2660BE1715A4589334C74C7</p>
+<p>坐标 <em>y</em>G: BC3736A2F4F6779C59BDCEE36B692153D0A9877CC62A474002DF32E52139F0A0</p>
+<p>公钥 <em>PB</em> : &#x3D;（<em>x</em>B, <em>y</em>B）,公钥 <em>P**B</em>由 B 的私钥生成，这里给定一值作为参照：</p>
+<p>坐标 xB: 09F9DF311E5421A150DD7D161E4BC5C672179FAD1833FC076BB08FF356F35020</p>
+<p>坐标yB:CCEA490CE26775A52DC6EA718CC1AA600AED05FBF35E084A6632F6072DA9AD13</p>
+</blockquote>
+<p>（1）方案一：</p>
+<img src="C:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629155203868.png" alt="image-20240629155203868" style="zoom:150%;" />
+
+<p>运行时间：0.02700638771057129seconds</p>
+<p>（2）方案二（选择窗口值为17）：</p>
+<img src="C:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629155631795.png" alt="image-20240629155631795" style="zoom:150%;" />
+
+<p>运行时间：0.01700592041015625seconds</p>
+<p>（3）方案三：</p>
+<img src="C:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629155951078.png" alt="image-20240629155951078" style="zoom:150%;" />
+
+<p>运行时间：0.019005775451660156seconds</p>
+<p>（4）方案四（窗口值为5）：</p>
+<img src="C:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629160017383.png" alt="image-20240629160017383" style="zoom:150%;" />
+
+<p>运行时间：0.0200042724609375seconds</p>
+<p>（5）方案五：</p>
+<img src="C:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629160035698.png" alt="image-20240629160035698" style="zoom:150%;" />
+
+<p>运行时间：0.03600788116455078seconds</p>
+<ol>
+<li>安全性分析：<ul>
+<li>所有方案均遵循SM2算法的安全性要求，确保在椭圆曲线上的操作符合密码学标准。</li>
+<li>Montgomery ladder算法特别强调其安全性，因为它在每一步都产生一个可能的中间结果，这有助于抵抗侧信道攻击，如定时攻击和功耗分析攻击。</li>
+<li>w-NAF方法通过减少加法和减法操作的次数，提高了运算效率，同时保持了安全性。</li>
+</ul>
+</li>
+<li>性能分析：<ul>
+<li>通过实验结果可以看出，不同的方案在运行时间上有明显的差异，这反映了它们在性能上的优劣。</li>
+<li>方案二（使用固定的滑动窗口）和方案三（使用自适应的滑动窗口）在运行时间上表现较好，说明滑动窗口技术可以有效提高倍点运算的效率。</li>
+<li>方案五（Montgomery ladder算法）的运行时间较长，这可能是由于Python实现中缺乏对算法的进一步优化。在实际硬件实现中，Montgomery ladder算法通常会可以提供较高的性能。</li>
+</ul>
+</li>
+</ol>
+<h3 id="五、总结与自我评价"><a href="#五、总结与自我评价" class="headerlink" title="五、总结与自我评价"></a>五、总结与自我评价</h3><p>在本次大作业中，我通过研究和实现不同的椭圆曲线倍点运算加速方案，初步地实现了一些软件算法解决了倍点运算效率低下的问题。这些方案的优点如下：</p>
+<p>1、滑动窗口技术通过减少迭代次数，提高了倍点运算的效率。</p>
+<p>2、自适应的滑动窗口技术可以根据二进制表示的分布情况自动调整窗口大小，从而达到最佳值。</p>
+<p>3、w-NAF方法通过减少加法和减法操作的次数，提高了运算效率。</p>
+<p>4、Montgomery ladder算法通过减少计算量并提高效率，提高了倍点运算的性能。<br>然而，还有一些问题尚未解决：在Python实现中，Montgomery ladder算法的运行时间较长，这可能是由于Python的性能限制。在实际硬件实现中，该算法可以提供更高的性能。同时所有方案都需要预计算，这增加了计算量和存储需求。如何进一步优化预计算过程是一个值得研究的问题。安全性和性能之间的权衡。提高运算效率可能会影响安全性，如何在保证安全性的前提下提高性能是一个挑战。另外我还了解到有一种Montgomery ladder算法的更进一步的算法Constant-time Montgomery Ladder，其的目标是在执行椭圆曲线点乘时，使得每一步的操作时间都与操作数的值无关，从而消除或减少侧信道攻击的风险。而实现Constant-time Montgomery Ladder的关键在于确保所有分支（例如，if-else语句）的执行时间相同，并且所有计算路径都执行相同的操作数量。</p>
+<p>在完成这个大作业的过程中，我深入了解了椭圆曲线密码学的基本原理和倍点运算的加速技术，学习到了很多软件算法的实现，同时在阅读文献的过程中也了解到了很多硬件方面针对倍点运算的优化。通过实现和评估不同的方案，我对这些技术的优缺点有了更清晰的认识。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/07/09/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" data-id="clye8egmu00010gw0f1pkgfiu" data-title="我的第一篇博客文章" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/07/09/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2024-07-09T09:45:43.566Z" itemprop="datePublished">2024-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2024/07/09/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/07/09/hello-world/" data-id="clye8egmo00000gw0eh8h2m2u" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/07/09/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">我的第一篇博客文章</a>
+          </li>
+        
+          <li>
+            <a href="/2024/07/09/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
