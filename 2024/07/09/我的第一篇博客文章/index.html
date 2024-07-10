@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>我的第一篇博客文章 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="密码学大作业报告——SM2的倍点运算快速实现22373032 秦敏泽一、背景与问题介绍SM2，作为中国自主研发的商用公钥密码算法标准，以其卓越的性能和高度的安全性，已经在国密系统中取代了RSA算法。如今，SM2已经在金融和其他关键领域得到了广泛应用。SM2算法基于椭圆曲线密码机制设计而成，其核心运算是椭圆曲线域上的倍点运算。这一运算在SM2算法中起着关键作用，它决定了签名验签、加解密以及密钥交换的">
+  <meta name="description" content="密码学大作业——SM2的倍点运算快速实现一、背景与问题介绍SM2，作为中国自主研发的商用公钥密码算法标准，以其卓越的性能和高度的安全性，已经在国密系统中取代了RSA算法。如今，SM2已经在金融和其他关键领域得到了广泛应用。SM2算法基于椭圆曲线密码机制设计而成，其核心运算是椭圆曲线域上的倍点运算。这一运算在SM2算法中起着关键作用，它决定了签名验签、加解密以及密钥交换的效率。因此，为了提高SM2算">
 <meta property="og:type" content="article">
 <meta property="og:title" content="我的第一篇博客文章">
 <meta property="og:url" content="http://example.com/2024/07/09/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="密码学大作业报告——SM2的倍点运算快速实现22373032 秦敏泽一、背景与问题介绍SM2，作为中国自主研发的商用公钥密码算法标准，以其卓越的性能和高度的安全性，已经在国密系统中取代了RSA算法。如今，SM2已经在金融和其他关键领域得到了广泛应用。SM2算法基于椭圆曲线密码机制设计而成，其核心运算是椭圆曲线域上的倍点运算。这一运算在SM2算法中起着关键作用，它决定了签名验签、加解密以及密钥交换的">
+<meta property="og:description" content="密码学大作业——SM2的倍点运算快速实现一、背景与问题介绍SM2，作为中国自主研发的商用公钥密码算法标准，以其卓越的性能和高度的安全性，已经在国密系统中取代了RSA算法。如今，SM2已经在金融和其他关键领域得到了广泛应用。SM2算法基于椭圆曲线密码机制设计而成，其核心运算是椭圆曲线域上的倍点运算。这一运算在SM2算法中起着关键作用，它决定了签名验签、加解密以及密钥交换的效率。因此，为了提高SM2算">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="c:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629155203868.png">
 <meta property="og:image" content="c:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629155631795.png">
@@ -21,7 +21,7 @@
 <meta property="og:image" content="c:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629160017383.png">
 <meta property="og:image" content="c:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629160035698.png">
 <meta property="article:published_time" content="2024-07-09T09:49:07.000Z">
-<meta property="article:modified_time" content="2024-07-09T09:50:31.976Z">
+<meta property="article:modified_time" content="2024-07-10T03:59:37.768Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="c:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629155203868.png">
@@ -180,7 +180,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="密码学大作业报告"><a href="#密码学大作业报告" class="headerlink" title="密码学大作业报告"></a>密码学大作业报告</h1><h2 id="——SM2的倍点运算快速实现"><a href="#——SM2的倍点运算快速实现" class="headerlink" title="——SM2的倍点运算快速实现"></a>——SM2的倍点运算快速实现</h2><h4 id="22373032-秦敏泽"><a href="#22373032-秦敏泽" class="headerlink" title="22373032 秦敏泽"></a><strong>22373032</strong> <strong>秦敏泽</strong></h4><h3 id="一、背景与问题介绍"><a href="#一、背景与问题介绍" class="headerlink" title="一、背景与问题介绍"></a>一、背景与问题介绍</h3><p>SM2，作为中国自主研发的商用公钥密码算法标准，以其卓越的性能和高度的安全性，已经在国密系统中取代了RSA算法。如今，SM2已经在金融和其他关键领域得到了广泛应用。<br>SM2算法基于椭圆曲线密码机制设计而成，其核心运算是椭圆曲线域上的倍点运算。这一运算在SM2算法中起着关键作用，它决定了签名验签、加解密以及密钥交换的效率。因此，为了提高SM2算法在实际应用中的效率，我们需要关注和优化椭圆曲线倍点算法的设计和实现。而椭圆曲线倍点算法的效率将会直接影响到整个加密过程的速度。通过研究和开发高效的椭圆曲线倍点算法，我们可以减少计算时间，从而提高SM2算法在实际应用中的性能，以达到提高其实际应用的广泛性的目标。<br>SM2算法作为一种高效且安全的商用公钥密码算法，已经在我国金融和其他关键领域得到广泛应用。为了进一步提高其性能，我们需要不断研究和改进椭圆曲线倍点算法，以实现更高效的加密和解密过程，从而保障我国金融和其他重要领域的安全性，并提高系统的运行效率。</p>
+        <h1 id="密码学大作业"><a href="#密码学大作业" class="headerlink" title="密码学大作业"></a>密码学大作业</h1><h2 id="——SM2的倍点运算快速实现"><a href="#——SM2的倍点运算快速实现" class="headerlink" title="——SM2的倍点运算快速实现"></a>——SM2的倍点运算快速实现</h2><h3 id="一、背景与问题介绍"><a href="#一、背景与问题介绍" class="headerlink" title="一、背景与问题介绍"></a>一、背景与问题介绍</h3><p>SM2，作为中国自主研发的商用公钥密码算法标准，以其卓越的性能和高度的安全性，已经在国密系统中取代了RSA算法。如今，SM2已经在金融和其他关键领域得到了广泛应用。<br>SM2算法基于椭圆曲线密码机制设计而成，其核心运算是椭圆曲线域上的倍点运算。这一运算在SM2算法中起着关键作用，它决定了签名验签、加解密以及密钥交换的效率。因此，为了提高SM2算法在实际应用中的效率，我们需要关注和优化椭圆曲线倍点算法的设计和实现。而椭圆曲线倍点算法的效率将会直接影响到整个加密过程的速度。通过研究和开发高效的椭圆曲线倍点算法，我们可以减少计算时间，从而提高SM2算法在实际应用中的性能，以达到提高其实际应用的广泛性的目标。<br>SM2算法作为一种高效且安全的商用公钥密码算法，已经在我国金融和其他关键领域得到广泛应用。为了进一步提高其性能，我们需要不断研究和改进椭圆曲线倍点算法，以实现更高效的加密和解密过程，从而保障我国金融和其他重要领域的安全性，并提高系统的运行效率。</p>
 <h3 id="二、解决方案"><a href="#二、解决方案" class="headerlink" title="二、解决方案"></a>二、解决方案</h3><h5 id="（1）主要设计思路与技术介绍"><a href="#（1）主要设计思路与技术介绍" class="headerlink" title="（1）主要设计思路与技术介绍"></a>（1）主要设计思路与技术介绍</h5><p>问题的产生：SM2算法的效率在加密、签名、密钥交换等操作中受到椭圆曲线域上倍点运算效率的影响。由于椭圆曲线密码体制的安全性建立在椭圆曲线离散对数问题的难解性上，因此，提高倍点运算的效率对于整体算法的性能至关重要。<br>解决方法：为了解决倍点运算效率低下的问题，我在查阅资料后，发现在软件加速可以考虑采用滑动窗口技术、加法链技术等。这些技术可以减少在椭圆曲线上的点乘运算所需的迭代次数，从而提高计算效率，而在硬件实现方面则主要是采用并行架构的基于FPGA的实现。在我的实验中，我对于几个软件上的方法都进行了实现，同时对于它们最终呈现的加速效果进行了比较。<br>预期效果：预期的优点包括减少计算时间、提高加密和解密的效率、降低能耗等，从而使得SM2算法在金融和其他关键领域的应用更加高效和可靠。</p>
 <h5 id="（2）具体方案实现分析："><a href="#（2）具体方案实现分析：" class="headerlink" title="（2）具体方案实现分析："></a>（2）具体方案实现分析：</h5><p>在本实验中，针对倍点运算的加速主要是在SM2加密算法步骤的A2和A3两步，即：</p>
 <blockquote>
