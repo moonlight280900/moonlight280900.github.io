@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="我的第一篇博客文章, MuQ">
+    <meta name="keywords" content="MuQ">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>我的第一篇博客文章 | MuQ</title>
+    <title>MuQ</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">我的第一篇博客文章</h1>
+                    <h1 class="description center-align post-title"></h1>
                 </div>
             </div>
         </div>
@@ -443,7 +443,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-07-09
+                    2024-08-15
                 </div>
                 
 
@@ -464,109 +464,31 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="密码学大作业"><a href="#密码学大作业" class="headerlink" title="密码学大作业"></a>密码学大作业</h1><h2 id="——SM2的倍点运算快速实现"><a href="#——SM2的倍点运算快速实现" class="headerlink" title="——SM2的倍点运算快速实现"></a>——SM2的倍点运算快速实现</h2><h3 id="一、背景与问题介绍"><a href="#一、背景与问题介绍" class="headerlink" title="一、背景与问题介绍"></a>一、背景与问题介绍</h3><p>SM2，作为中国自主研发的商用公钥密码算法标准，以其卓越的性能和高度的安全性，已经在国密系统中取代了RSA算法。如今，SM2已经在金融和其他关键领域得到了广泛应用。<br>SM2算法基于椭圆曲线密码机制设计而成，其核心运算是椭圆曲线域上的倍点运算。这一运算在SM2算法中起着关键作用，它决定了签名验签、加解密以及密钥交换的效率。因此，为了提高SM2算法在实际应用中的效率，我们需要关注和优化椭圆曲线倍点算法的设计和实现。而椭圆曲线倍点算法的效率将会直接影响到整个加密过程的速度。通过研究和开发高效的椭圆曲线倍点算法，我们可以减少计算时间，从而提高SM2算法在实际应用中的性能，以达到提高其实际应用的广泛性的目标。<br>SM2算法作为一种高效且安全的商用公钥密码算法，已经在我国金融和其他关键领域得到广泛应用。为了进一步提高其性能，我们需要不断研究和改进椭圆曲线倍点算法，以实现更高效的加密和解密过程，从而保障我国金融和其他重要领域的安全性，并提高系统的运行效率。</p>
-<h3 id="二、解决方案"><a href="#二、解决方案" class="headerlink" title="二、解决方案"></a>二、解决方案</h3><h5 id="（1）主要设计思路与技术介绍"><a href="#（1）主要设计思路与技术介绍" class="headerlink" title="（1）主要设计思路与技术介绍"></a>（1）主要设计思路与技术介绍</h5><p>问题的产生：SM2算法的效率在加密、签名、密钥交换等操作中受到椭圆曲线域上倍点运算效率的影响。由于椭圆曲线密码体制的安全性建立在椭圆曲线离散对数问题的难解性上，因此，提高倍点运算的效率对于整体算法的性能至关重要。<br>解决方法：为了解决倍点运算效率低下的问题，我在查阅资料后，发现在软件加速可以考虑采用滑动窗口技术、加法链技术等。这些技术可以减少在椭圆曲线上的点乘运算所需的迭代次数，从而提高计算效率，而在硬件实现方面则主要是采用并行架构的基于FPGA的实现。在我的实验中，我对于几个软件上的方法都进行了实现，同时对于它们最终呈现的加速效果进行了比较。<br>预期效果：预期的优点包括减少计算时间、提高加密和解密的效率、降低能耗等，从而使得SM2算法在金融和其他关键领域的应用更加高效和可靠。</p>
-<h5 id="（2）具体方案实现分析："><a href="#（2）具体方案实现分析：" class="headerlink" title="（2）具体方案实现分析："></a>（2）具体方案实现分析：</h5><p>在本实验中，针对倍点运算的加速主要是在SM2加密算法步骤的A2和A3两步，即：</p>
-<blockquote>
-<p>A2： 计算椭圆曲线点 <em>C</em>1 <em>&#x3D;</em> [<em>k</em>]<em>G&#x3D;</em>(<em>x</em>1, <em>y</em>1)，按 GM&#x2F;T 0003.1—2012 的 4.2.9 和 4.2.5 给出</p>
-<p>的方法，将 <em>C</em>1 的数据类型转换为比特串；</p>
-<p>A3： 计算椭圆曲线点 <em>S</em> &#x3D; [<em>h</em>]<em>P**B</em>&#x3D;(<em>x</em>2, <em>y</em>2)，若 <em>S</em> 是无穷远点则报错退出；</p>
-</blockquote>
-<p>因此不必要把整个SM2加密算法进行实现，只需要对倍点运算进行实现，评价不同算法的效率用执行这两个步骤的所用时间来衡量即可；此外，在题面中提到“编写代码可以借助公开库miracl等”，miracl是针对c语言的一个公开库，我使用python完成了这次实验，并且正如我前面所说，在实验的过程中不需要对整个SM2进行实现，我也就没有用到很相关的密码学库，这在具体的代码中有所体现。</p>
-<p>下面我将介绍我实现的几种方案：</p>
-<p>（1）传统使用平方乘算法思想的倍点运算的实现：这是最基本的倍点运算的加速，不采取一个一个点的相加，而是使用平方乘算法的思想进行实现，也就是经典的倍乘-加算法，在我的本次方案中，这一实现达到的效率作为最基本的效率评估。</p>
-<p>（2）使用固定的滑动窗口进行倍点运算的加速：这种方法在我看来是对使用平方乘算法的一种改进方法，其通过扩展平方乘算法的位数和进行预计算达到了比第一种方案理论上更快的倍点运算的效果，其具体做法是：例如计算k﹡P选择一个窗口值<em>w</em>，我们预计算0到2**w的P作为预计算得到的数组结果，将k化为二进制表示，并将二进制表示按w位进行分组（若无法正好分完，则在处理最后一个窗口时进行单独计算，将其结果加到前面得到的结果中），之后的过程事实上与平方乘类似：</p>
-<p><em>1、设定初始点为椭圆曲线的单位元O</em></p>
-<p><em>2、在k的二进制表示没有被取完时，每次取k的二进制表示的w位作为window值</em></p>
-<p><em>3、临时点&#x3D;预计算中window值对应的点</em></p>
-<p><em>4、结果点等于（2**w）倍的结果点加上临时点</em></p>
-<p><em>5、在k的二进制表示被取完后，最后的结果点即是倍点运算的结果</em></p>
-<p>这种方式与平方乘算法的不同就在于平方乘算法一次只能移动一位，而这种固定窗口的方法一次可以移动多位，显然在不计较预计算的开销的情况下，后者的效率是更高的。</p>
-<p>事实上，我在后面查阅文献了解到这种方法是国际电机电子工程师协会于1994 年开始着手定制的P1363标准中实现了的标量乘法，即滑动窗口算法。该算法根据固定窗口的大小，每次处理二进制数P中的多位。</p>
-<p>（3）使用自适应的滑动窗口标量乘法：我在实现完固定的滑动窗口之后，我发现窗口值的大小直接关系到整个倍点计算的效率。我在想如果预计算的时间不需要考虑的话，是否窗口值一直扩大则实际运算的效率就会更高，这一点是显然的，因为只要窗口值足够大，那么k的二进制表示就能落在预计算的值中，调用只需要O(1)，但是这样做无疑大大增大了预计算的计算量，预计算的结果的存储也成问题；既然窗口值不能一味的变大，那么怎么找到一个最合适的大窗口呢？考虑预计算的过程，我发现其计算的是0到2**w的P，那么窗口值的取值就显然了：窗口值取k的二进制表示中连续1和连续0最多的个数，之后的计算过程就是和固定窗口一样了：</p>
-<p><em>1、判断k中最多的连续1和连续0的位数的较大值，将其作为窗口值</em></p>
-<p><em>2、使用这一窗口值进行方案二中的过程</em></p>
-<p>原始滑动窗口算法中窗口大小固定不变，每次根据给定的窗口大小值，处理二进制大整数中的固定长度为；而在改进的算法中，滑动窗口的大小不需要预先设定，根据二进制表示中0和1的分布情况来自动调整窗口的大小，从而达到最佳值。</p>
-<p>（4）w-NAF表示法：NAF是不同于二进制表示的一种数的表示方法，其有一些特殊的性质：</p>
-<blockquote>
-<ul>
-<li>每个正整数k都有独一无二的NAF表达。记作NAF(k)。</li>
-<li>NAF(k)有所有k的有符号表达最少的非零数字。</li>
-<li>NAF(k)的长度最多比二进制表达多一个。</li>
-<li>在所有长度为𝑙的NAF中，非零系数的概率约为1&#x2F;3。</li>
-</ul>
-</blockquote>
-<p>这样的性质可以减少倍点运算中加法运算的次数，从而达到提高倍点运算效率的作用。</p>
-<p>更近一步，可以将NAF{-1，0，1}表示变成w进制的表示方法，即w-NAF方法，这样与滑动窗口类似可以进一步提高NAF基础上的的倍点计算效率，这样做需要：</p>
-<p>1、与滑动窗口的方法类似，选择窗口大小w，进行预计算。</p>
-<p>2、将正常的二进制表示变成w-NAF表示。</p>
-<p>3、使用w-NAF表示来进行迭代计算。</p>
-<p>其主要优点是它减少了椭圆曲线标量乘法中所需的加法和减法操作的次数，同时增加了双倍操作的次数。由于双倍操作通常比加法操作更快，因此w-NAF可以显著提高标量乘法的效率。</p>
-<p>（5）Montgomery ladder算法：只使用双倍运算和一个固定的加法运算来生成所有的中间结果，这样可以减少计算量并提高效率，这种算法在实现原理上看和正常的平方乘加速没有什么区别。</p>
+                <h1 id="学习零知识证明（Zero-knowledge-proof）"><a href="#学习零知识证明（Zero-knowledge-proof）" class="headerlink" title="学习零知识证明（Zero-knowledge proof）"></a>学习零知识证明（Zero-knowledge proof）</h1><p><strong>Author</strong>： MuQ</p>
+<h2 id="一、简要介绍"><a href="#一、简要介绍" class="headerlink" title="一、简要介绍"></a>一、简要介绍</h2><p>零知识证明（Zero-Knowledge Proof）是一种密码学概念，指的是证明者能够在不泄漏任何有用信息的情况下，使验证者相信某个陈述是正确的。在这个过程中，证明者知道某个秘密（比如密码或者某种信息），他需要向验证者证明他知道这个秘密，但是又不能直接透露这个秘密是什么。<br>零知识证明的三个核心特性：</p>
 <ol>
-<li>初始化：选择椭圆曲线上的一个基点G，以及要计算的标量k（k的二进制表示）。初始化两个点R0和R1，其中R0是无穷远点（即零点），R1是基点G。</li>
-<li>迭代计算：对于标量k的每一个二进制位（从最高位到最低位），执行以下操作：<ul>
-<li>如果当前位是0，执行一个双倍运算：R1 &#x3D; R1 + R0，R0 &#x3D; 2 * R0。</li>
-<li>如果当前位是1，执行一个双倍运算和一个加法运算：R0 &#x3D; R0 + R1，R1 &#x3D; 2 * R1。</li>
-</ul>
-</li>
-<li>输出结果：迭代完成后，R0就是标量k乘以基点G的结果。</li>
+<li><strong>完备性（Completeness）</strong>：如果陈述是真实的，那么诚实的证明者能够使验证者相信这一陈述。</li>
+<li><strong>可靠性（Soundness）</strong>：如果陈述是假的，那么无论证明者如何尝试欺骗，都不能使验证者错误地接受一个假的陈述，除非欺骗的概率非常小。</li>
+<li><strong>零知识性（Zero-Knowledge）</strong>：证明过程中不泄露任何有关秘密的信息给验证者或其他任何未授权的第三方。</li>
 </ol>
-<p>Montgomery ladder的一个关键特性是它的安全性。在算法的每一步中，R0和R1都是标量乘法可能的中间结果，这意味着攻击者无法通过观察中间步骤来获取关于私钥的信息。这种性质使得Montgomery ladder在抵抗某些类型的侧信道攻击（如定时攻击和功耗分析攻击）方面特别有用。</p>
-<h3 id="四、方案评估"><a href="#四、方案评估" class="headerlink" title="四、方案评估"></a>四、方案评估</h3><p>传入倍点计算的数值就是题面上给出的曲线参数，即：</p>
-<blockquote>
-<p>椭圆曲线方程为：<em>y</em> 2 &#x3D; <em>x</em> 3 + <em>ax</em> + <em>b</em></p>
-<p>素数 p：FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFF</p>
-<p>系数 a：FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000FFFFFFFFFFFFFFFC</p>
-<p>系数 b：8E9FA9E9D9F5E344D5A9E4BCF6509A7F39789F515AB8F92DDBCBD414D940E93</p>
-<p>阶 n: FFFFFFFEFFFFFFFFFFFFFFFFFFFFFFFF7203DF6B21C6052B53BBF40939D54123</p>
-<p>基点 G：&#x3D;（<em>x</em>G,<em>y</em>G）</p>
-<p>坐标 <em>x</em>G: 32C4AE2C1F1981195F9904466A39C9948FE30BBFF2660BE1715A4589334C74C7</p>
-<p>坐标 <em>y</em>G: BC3736A2F4F6779C59BDCEE36B692153D0A9877CC62A474002DF32E52139F0A0</p>
-<p>公钥 <em>PB</em> : &#x3D;（<em>x</em>B, <em>y</em>B）,公钥 <em>P**B</em>由 B 的私钥生成，这里给定一值作为参照：</p>
-<p>坐标 xB: 09F9DF311E5421A150DD7D161E4BC5C672179FAD1833FC076BB08FF356F35020</p>
-<p>坐标yB:CCEA490CE26775A52DC6EA718CC1AA600AED05FBF35E084A6632F6072DA9AD13</p>
-</blockquote>
-<p>（1）方案一：</p>
-<img src="C:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629155203868.png" alt="image-20240629155203868" style="zoom:150%;" />
-
-<p>运行时间：0.02700638771057129seconds</p>
-<p>（2）方案二（选择窗口值为17）：</p>
-<img src="C:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629155631795.png" alt="image-20240629155631795" style="zoom:150%;" />
-
-<p>运行时间：0.01700592041015625seconds</p>
-<p>（3）方案三：</p>
-<img src="C:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629155951078.png" alt="image-20240629155951078" style="zoom:150%;" />
-
-<p>运行时间：0.019005775451660156seconds</p>
-<p>（4）方案四（窗口值为5）：</p>
-<img src="C:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629160017383.png" alt="image-20240629160017383" style="zoom:150%;" />
-
-<p>运行时间：0.0200042724609375seconds</p>
-<p>（5）方案五：</p>
-<img src="C:\Users\QMZ\AppData\Roaming\Typora\typora-user-images\image-20240629160035698.png" alt="image-20240629160035698" style="zoom:150%;" />
-
-<p>运行时间：0.03600788116455078seconds</p>
+<p>零知识证明在密码学和隐私保护领域有广泛的应用，比如身份验证、加密货币的交易、安全协议等。它在保障个人隐私的同时，能够有效地验证信息的真实性。</p>
+<h2 id="二、具体例子"><a href="#二、具体例子" class="headerlink" title="二、具体例子"></a>二、具体例子</h2><p>我想首先介绍一个经典的“零知识证明图的三染色问题”，这个例子来源于UCLA的Amit Sahai教授关于零知识证明技术的介绍。<br>染色问题是一个特殊的NP问题，我们可以用它来简单介绍零知识证明的过程，假定甲是证明者而乙是验证者，甲知道一张图如何进行染色而不想让乙知道具体的染色方案，甲可以通过以下步骤来证明：</p>
 <ol>
-<li>安全性分析：<ul>
-<li>所有方案均遵循SM2算法的安全性要求，确保在椭圆曲线上的操作符合密码学标准。</li>
-<li>Montgomery ladder算法特别强调其安全性，因为它在每一步都产生一个可能的中间结果，这有助于抵抗侧信道攻击，如定时攻击和功耗分析攻击。</li>
-<li>w-NAF方法通过减少加法和减法操作的次数，提高了运算效率，同时保持了安全性。</li>
-</ul>
-</li>
-<li>性能分析：<ul>
-<li>通过实验结果可以看出，不同的方案在运行时间上有明显的差异，这反映了它们在性能上的优劣。</li>
-<li>方案二（使用固定的滑动窗口）和方案三（使用自适应的滑动窗口）在运行时间上表现较好，说明滑动窗口技术可以有效提高倍点运算的效率。</li>
-<li>方案五（Montgomery ladder算法）的运行时间较长，这可能是由于Python实现中缺乏对算法的进一步优化。在实际硬件实现中，Montgomery ladder算法通常会可以提供较高的性能。</li>
-</ul>
-</li>
+<li><strong>初始化</strong>：甲拥有一张已经正确三染色的图，但是他不希望透露具体的染色方案给乙。甲将图的所有颜色遮盖起来，只留下图的形状和边。</li>
+<li><strong>证明者的操作</strong>：甲随机选择或者由乙指定图中的两个区域（通常是通过遮盖来表示），并揭示这两个区域在甲的染色方案中的颜色。</li>
+<li><strong>验证者的验证</strong>：乙检查这两个区域是否在原图中是相邻的，并且颜色是否符合三染色的规则（即相邻区域不能有相同的颜色）。如果检查通过，乙暂时接受这次证明；如果检查不通过，则证明失败。</li>
+<li><strong>重置和重复</strong>：甲重新遮盖刚才揭示的两个区域的颜色，并可能对整个图的染色进行“洗牌”（即重新随机选择颜色分配，但仍然保持三染色的规则）。然后，甲和乙可以重复上述过程多次。</li>
 </ol>
-<h3 id="五、总结与自我评价"><a href="#五、总结与自我评价" class="headerlink" title="五、总结与自我评价"></a>五、总结与自我评价</h3><p>在本次大作业中，我通过研究和实现不同的椭圆曲线倍点运算加速方案，初步地实现了一些软件算法解决了倍点运算效率低下的问题。这些方案的优点如下：</p>
-<p>1、滑动窗口技术通过减少迭代次数，提高了倍点运算的效率。</p>
-<p>2、自适应的滑动窗口技术可以根据二进制表示的分布情况自动调整窗口大小，从而达到最佳值。</p>
-<p>3、w-NAF方法通过减少加法和减法操作的次数，提高了运算效率。</p>
-<p>4、Montgomery ladder算法通过减少计算量并提高效率，提高了倍点运算的性能。<br>然而，还有一些问题尚未解决：在Python实现中，Montgomery ladder算法的运行时间较长，这可能是由于Python的性能限制。在实际硬件实现中，该算法可以提供更高的性能。同时所有方案都需要预计算，这增加了计算量和存储需求。如何进一步优化预计算过程是一个值得研究的问题。安全性和性能之间的权衡。提高运算效率可能会影响安全性，如何在保证安全性的前提下提高性能是一个挑战。另外我还了解到有一种Montgomery ladder算法的更进一步的算法Constant-time Montgomery Ladder，其的目标是在执行椭圆曲线点乘时，使得每一步的操作时间都与操作数的值无关，从而消除或减少侧信道攻击的风险。而实现Constant-time Montgomery Ladder的关键在于确保所有分支（例如，if-else语句）的执行时间相同，并且所有计算路径都执行相同的操作数量。</p>
-<p>在完成这个大作业的过程中，我深入了解了椭圆曲线密码学的基本原理和倍点运算的加速技术，学习到了很多软件算法的实现，同时在阅读文献的过程中也了解到了很多硬件方面针对倍点运算的优化。通过实现和评估不同的方案，我对这些技术的优缺点有了更清晰的认识。</p>
+<p>通过这个过程，乙会逐渐相信甲确实知道一个有效的三染色方案，因为甲能够在任何指定的区域中正确地揭示颜色，并且每次都能通过乙的验证。然而，乙并没有获得足够的信息来确定整个图的染色方案，这就是零知识性的体现。</p>
+<p><strong>可是这里有一个问题</strong>，甲方完全有可能通过随机猜测或者某种策略在乙方有限次的验证过程中欺骗乙方而蒙混过关，这似乎说明零知识证明有概率失败，事实上，这是符合零知识证明的可靠性的，因为零知识证明的可靠性本身就不是绝对的。</p>
+<p>而为了确保零知识证明的可靠性，通常会采取以下措施：</p>
+<ol>
+<li><strong>重复验证</strong>：通过多次重复验证过程，可以显著降低甲方欺骗成功的概率。随着验证次数的增加，如果甲方不知道正确的三染色方案，他欺骗成功的概率将呈指数级下降。</li>
+<li><strong>随机性</strong>：在整个过程中引入随机性，确保甲方无法预测或控制乙方的选择。例如，乙方可以随机选择要查看的区域，而甲方在每次验证后都需要重新“洗牌”染色方案。</li>
+<li><strong>复杂性和计算难度</strong>：在现实的零知识证明系统中，通常会使用复杂的数学问题，这些问题对于人类来说是难以解决的，但对于计算机来说，如果给出正确的输入，可以在合理的时间内解决。这增加了欺骗的难度，因为甲方需要生成一个在数学上有效的解决方案，而这通常是不可能的，除非他真的知道正确的答案。</li>
+<li><strong>形式化证明</strong>：在实际应用中，零知识证明是基于严格的数学证明和密码学协议构建的，这些协议被设计为即使在面对计算能力非常强大的对手时也是安全的。</li>
+</ol>
+<p>事实上，零知识证明是一种在概率意义上可靠的证明技术，它通过设计和协议确保在有限的计算资源下，欺骗的概率是可以接受的低。在实际应用中，零知识证明已经被证明是非常有效的，如在密码学，隐私保护等领域。</p>
 
                 
             </div>
@@ -583,7 +505,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">John Doe</a>
+                    <a href="/about" rel="external nofollow noreferrer">MuQ</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -593,7 +515,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://moonlight280900.github.io/2024/07/09/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">http://moonlight280900.github.io/2024/07/09/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/</a>
+                    <a href="http://moonlight280900.github.io/2024/08/15/%E5%AD%A6%E4%B9%A0%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%EF%BC%88Zero-knowledge%20proof%EF%BC%89/">http://moonlight280900.github.io/2024/08/15/%E5%AD%A6%E4%B9%A0%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%EF%BC%88Zero-knowledge%20proof%EF%BC%89/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -606,7 +528,7 @@
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">John Doe</a>
+                    <a href="/about" target="_blank">MuQ</a>
                     !
                 </span>
             </div>
@@ -803,13 +725,13 @@
                 <i class="far fa-dot-circle"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2024/07/09/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">
+                <a href="/2024/08/15/%E5%AD%A6%E4%B9%A0%E9%9B%B6%E7%9F%A5%E8%AF%86%E8%AF%81%E6%98%8E%EF%BC%88Zero-knowledge%20proof%EF%BC%89/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="我的第一篇博客文章">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">我的第一篇博客文章</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -820,12 +742,12 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2024-07-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-08-15
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            MuQ
                             
                         </span>
                     </div>
@@ -863,7 +785,7 @@
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
-                            John Doe
+                            MuQ
                             
                         </span>
                     </div>
@@ -1061,7 +983,7 @@
                 <span id="year">2019-2024</span>
             
             <span id="year">2019</span>
-            <a href="/about" target="_blank">John Doe</a>
+            <a href="/about" target="_blank">MuQ</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
